@@ -15,11 +15,10 @@
 int main(int argc, char** argv) {
 
     char input;
-    bool flag = false;
-    int diceRoll;
+    bool flag1 = false, flag2 = false;
+    int diceRoll, count = 5;
 
     srand(time(NULL));
-    diceRoll = rand() % 5 + 1;
 
     //  Story setup:
     //  The player is an adventurer, whose family was just slain and is on a quest to seek vengeance.
@@ -31,13 +30,13 @@ int main(int argc, char** argv) {
 
     // This shit actually works! validates the user input, requiring that an <Enter> key is pressed to continue:
     std::cout << "Welcome to your adventure!\n";
-    while (flag == false) {
+    while (flag1 == false) {
         std::cout << "Please press <Enter> to continue: ";
         std::cin.get(input);
         if (input != '\n')
             std::cin.ignore(80, '\n');
         else
-            flag = true;
+            flag1 = true;
     }
 
     std::cout << "\n\n";
@@ -154,10 +153,67 @@ int main(int argc, char** argv) {
 
                     std::cout << "As the bandit begins to approach, the player frantically searches for something to give him the upper hand:\n";
 
+                    //  Randomized user choice point: (random dice roll, but when a choice is selected it should be removed from the pool of choices. If a choice does not end the game, 
+                    //  another choice should be offered to the player)
+
+                    do {
+                        diceRoll = rand() % count + 1;
+                        switch (diceRoll) {
+                        case 1:
+                            std::cout << "The player notes a small, anachronistic flintlock pistol lying next to a dead thug some distance from the remaining, breathing thug.\n";
+                            std::cout << "He engages in conversation with the remaining thug as he subtly sidles over to the weapon. The thug falls for his ruse. He quickly picks up \n";
+                            std::cout << "the gun and fires it center mass. The powerful sidearm punches a large, grisly hole through the thug and he falls to the ground.\n";
+
+                            std::cout << "What shall you do next?\n";
+
+                            std::cout << "1)    Push wreckage out of the way to clear a path for your horse.\n";
+                            std::cout << "2)    Loot the dead bandits, looking for anything that may help determine the path of the lead bandit and perhaps intercept him.\n";
+                            // Validate input:
+                            do {
+                                std::cout << "Choice:   ";
+                                std::cin >> input;
+                            } while (input != 2 && input != 1);
+                            if (input == 1) {
+
+                                //  Branching point 1-1-2-1-2-1:
+
+                                std::cout << "The player hops his horse and continues pursuing the lead bandit, following the northern road in hopes that he'll come across \n";
+                                std::cout << "further evidence of the bandit's intentions and direction.\n";
+                                std::cout << "- TO BE CONTINUED ... -\N";
+                            }
+                            else if (input == 2) {
+                                //  Branching point 1-1-2-1-2-2:   
+
+                                std::cout << "The player finds a note on one of the bandits, conveniently outlining the lead bandit's intention to ransack and raze the nearby town of \n";
+                                std::cout << "Villagedale. The player clears some of the wreckage and mounts his horse. He heads along the northern road before veering onto a little-known \n";
+                                std::cout << "side path that leads straight to Villagedale.\n";
+                                std::cout << "- TO BE CONTINUED ... -\N";
+                            }
+                            flag2 = true; // loop should exit because the story has ended
+                            break;
+                        case 2:
+                            std::cout << "The player grabs a small skull fragment lying near one of the dead bandits. He hurls it at the living bandit. The bandit moves with blinding speed, \n";
+                            std::cout << "deflecting it directly back at the player.The skull fragment strikes the player's nose, breaking it and sending the player flailing onto the ground. \n";
+                            std::cout << "The bandit saunters up to the player, smiles, and drives his shortsword into the player's heart.\n";
+                            std::cout << "- GAME OVER -\n";
+                            flag2 = true;
+                            break;
+                        // cases 3 through 5 will continue the story, and provide the player with a choice between continuing to search for an object on the ground or returning to branching point 1-1-2-1-1
+                        case 3:
+                            std::cout << "The player grabs a large brick and hurls it weakly at the bandit. It lands next to the bandit's shoe and he continues pursuing the player.\n";
+                            break;
+                        case 4:
+                            std::cout << "The player grabs a shoe and beams the bandit in the face. Though annoyed, the bandit continues forward.\n";
+                            break;
+                        case 5:
+                            std::cout << "The player grabs a bottle of wine and throws. The bandit catches the bottle, uncorks it, and takes a swig before tossing it aside and continuing forward.\n";
+                            break;
+                        }
+                        count--;
+                    } while (flag2 != true) // this flag should control loop exit on an invalid input, choice to return to branching point 1-1-2-1-1, or a random choice that ends the story
 
 
-                    //			Randomized user choice point: (random dice roll, but when a choice is selected it should be removed from the pool of choices. If a choice does not end the game, 
-                    //										   another choice should be offered to the player)
+
                     //         1)	The player notes a small, anachronistic flintlock pistol lying next to a dead thug some distance from the remaining, breathing thug.
                     //          	He engages in conversation with the remaining thug as he subtly sidles over to the weapon. The thug falls for his ruse. He quickly picks up the gun
                     //          	and fires it center mass. The powerful sidearm punches a large, grisly hole through the thug and he falls to the ground.
